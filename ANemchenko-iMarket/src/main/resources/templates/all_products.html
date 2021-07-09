@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container">
+        <h1>Products Available</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Cost</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${productRepository}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.title}"></td>
+                <td th:text="${p.cost}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    </body>
+
+</html>
