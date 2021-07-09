@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container">
+        <!--GET http://localhost:8189/iMarket-->
+        <form method="post" th:action="@{/add_product}">
+            <input type="number" name="id">
+            <input type="text" name="title">
+            <input type="number" name="cost">
+            <button class="btn btn-primary" type="submit">ADD product to repository</button>
+        </form>
+    </div>
+    </body>
+
+</html>
