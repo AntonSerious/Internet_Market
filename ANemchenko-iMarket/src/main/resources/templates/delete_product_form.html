@@ -10,13 +10,11 @@
 
 <body>
 <div class="container">
-    <h1>Add new product form</h1>
+    <h1>Delete product form</h1>
     <!-- POST [http://localhost:8189/summer/]products/add?title=cola&price=100   -->
-    <form method="post" th:action="@{/products/add}">
+    <form method="post" th:action="@{/products/delete}">
         <input type="number" name="id">
-        <input type="text" name="title">
-        <input type="number" name="price">
-        <button class="btn btn-primary" type="submit">Create product</button>
+        <button class="btn btn-primary" type="submit">Delete product</button>
     </form>
     <a class="btn btn-primary" th:href="@{/nav}">To Navigation Page</a>
 </div>

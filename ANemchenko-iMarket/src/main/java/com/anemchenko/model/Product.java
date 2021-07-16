@@ -1,6 +1,8 @@
 package com.anemchenko.model;
 
-public class Product {
+import com.anemchenko.repositories.ProductDao;
+
+public class Product extends ProductDao {
     private Long id;
     private String title;
     private int price;
@@ -8,6 +10,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(String title, int price){
+        this.title = title;
+        this.price = price;
+    }
     public Product(Long id, String title, int price) {
         this.id = id;
         this.title = title;
