@@ -1,6 +1,7 @@
 package com.anemchenko.controllers;
 
 import com.anemchenko.model.Product;
+import com.anemchenko.repositories.ProductDao;
 import com.anemchenko.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,10 @@ public class ProductController {
     public String showAddProductForm(){
         return "add_product_form";
     }
+
     @PostMapping("/products/add")
-    public String saveNewProduct(@RequestParam String title, @RequestParam int price){
-        productService.saveNewProduct(title, price);
+    public String saveNewProduct(@RequestParam Long id,@RequestParam String title, @RequestParam int price){
+        productService.saveNewProduct(id, title, price);
 
         return "redirect:/";
     }
@@ -37,6 +39,16 @@ public class ProductController {
     public String showProductInfo(Model model, @PathVariable Long id){
         model.addAttribute("product", productService.findById(id));
         return "product_info";
+    }
+    @GetMapping("/products/delete")
+    public String showDeleteProductForm(){
+        return "delete_product_form";
+    }
+
+    @PostMapping("/products/delete")
+    public String DeleteProduct(@RequestParam Long id){
+        productService.deleteProductById(id);
+        return "redirect:/";
     }
 
 }
