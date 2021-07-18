@@ -38,8 +38,10 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public String showProductInfo(Model model, @PathVariable Long id){
         model.addAttribute("product", productService.findById(id));
+        model.addAttribute("customersInfo", productService.findAllCustomersById(id));
         return "product_info";
     }
+
     @GetMapping("/products/delete")
     public String showDeleteProductForm(){
         return "delete_product_form";

@@ -2,7 +2,7 @@ package com.anemchenko.services;
 
 import com.anemchenko.model.Product;
 import com.anemchenko.repositories.ProductDao;
-import com.anemchenko.repositories.ProductRepository;
+import com.anemchenko.repositories.custBuyingsInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +32,9 @@ public class ProductService {
 
     public void deleteProductById(Long id) {
         productDao.deleteById(id);
+    }
+
+    public List<custBuyingsInfoDao> findAllCustomersById(Long id) {
+        return productDao.findAllCustomersById(id);
     }
 }

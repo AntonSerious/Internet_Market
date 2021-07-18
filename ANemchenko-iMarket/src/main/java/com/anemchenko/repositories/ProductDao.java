@@ -1,10 +1,13 @@
 package com.anemchenko.repositories;
 
 import com.anemchenko.ANemchenkoIMarketApplication;
+import com.anemchenko.model.Customer;
 import com.anemchenko.model.Product;
+import com.anemchenko.utils.DBFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,17 +20,13 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 public class ProductDao{
-    public static SessionFactory factory;
+    @Autowired
+    @Transient
+    private DBFactory dbFactory;
 
     public ProductDao(Object o, String title, int price) {
         this.title = title;
         this.price = price;
-    }
-
-    public static void init(){
-        factory = new Configuration()
-                .configure("configs/hibernate.cfg.xml")
-                .buildSessionFactory();
     }
 
     @Id
@@ -41,9 +40,12 @@ public class ProductDao{
     @Column(name = "price")
     private int price;
 
+    @OneToMany(mappedBy = "productDao")
+    private List<custBuyingsInfoDao> customerDetails;
 
 
     public ProductDao() {
+
     }
 
     public Long getId() {
@@ -74,55 +76,53 @@ public class ProductDao{
 
 
     public Product findById(Long id){
-        init();
-        try(Session session = factory.getCurrentSession()){
+        try(Session session = dbFactory.getFactory().getCurrentSession()){
             session.beginTransaction();
             ProductDao productDao = session.get(ProductDao.class, id );
             System.out.println(productDao);
             session.getTransaction().commit();
             return new Product(productDao.getId(), productDao.getTitle(), productDao.getPrice());
-        } finally {
-            shutdown();
         }
     }
     public void saveOrUpdate(Product product){
-        init();
-        try(Session session = factory.getCurrentSession()){
+        try(Session session = dbFactory.getFactory().getCurrentSession()){
             session.beginTransaction();
             Long id = product.getId();
             String title = product.getTitle();
             int price = product.getPrice();
             session.saveOrUpdate(new ProductDao(id, title, price));
             session.getTransaction().commit();
-        } finally {
-            shutdown();
         }
     }
 
-    public static void shutdown(){
-        factory.close();
-    }
     public List<Product> findAll(){
-        init();
-        try(Session session = factory.getCurrentSession()){
+        try(Session session = dbFactory.getFactory().getCurrentSession()){
             session.beginTransaction();
             List<Product> products = session.createQuery("from ProductDao").getResultList();
             session.getTransaction().commit();
             return products;
-        } finally {
-            shutdown();
         }
     }
     public void deleteById(Long id){
-        init();
-        try(Session session = factory.getCurrentSession()){
+        try(Session session = dbFactory.getFactory().getCurrentSession()){
             session.beginTransaction();
             ProductDao productDao = session.get(ProductDao.class, id );
             session.delete(productDao);
             session.getTransaction().commit();
-        } finally {
-            shutdown();
         }
     }
 
+    public List<custBuyingsInfoDao> findAllCustomersById(Long id) {
+        try(Session session = dbFactory.getFactory().getCurrentSession()){
+            session.beginTransaction();
+            List<custBuyingsInfoDao> customers = session.get(ProductDao.class, id).getCustomers();
+            System.out.println(customers);
+            session.getTransaction().commit();
+            return customers;
+        }
+    }
+
+    private List<custBuyingsInfoDao> getCustomers() {
+        return customerDetails;
+    }
 }
