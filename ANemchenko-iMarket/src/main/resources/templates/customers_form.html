@@ -9,33 +9,27 @@
 </head>
 <body>
 <div class="container">
-  <h1>Product Info </h1>
-  <h3 th:text="${'ID ' + product.id }"></h3>
-  <h3 th:text="${'Title ' + product.title }"></h3>
-  <h3 th:text="${'Price ' + product.price }"></h3>
-  <h2>This product was bought by:</h2>
+  <h1>Customers </h1>
   <table class="table">
     <thead>
     <tr>
-      <td>Customer ID</td>
-      <td>Customer Name</td>
-      <td>Buy Price</td>
+      <td>ID</td>
+      <td>Name</td>
       <td></td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="c : ${customersInfo}">
-      <td th:text="${c.customer.id}"></td>
-      <td th:text="${c.customer.name}"></td>
-      <td th:text="${c.buyPrice}"></td>
-      <p></p>
+    <tr th:each="c : ${customers}">
+      <td th:text="${c.id}"></td>
+      <td th:text="${c.name}"></td>
+      <td>
+        <a class="btn btn-primary" th:href="@{'/customers/' + ${c.id}}">Customer's Details</a>
+      </td>
     </tr>
     </tbody>
   </table>
-  <p></p>
-  <a class="btn btn-primary" th:href="@{/}">To Products Page</a>
+  <a class="btn btn-primary" th:href="@{/nav}">To Navigation Page</a>
 </div>
-
 </body>
 
 </html>

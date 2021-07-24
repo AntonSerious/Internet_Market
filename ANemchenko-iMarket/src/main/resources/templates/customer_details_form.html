@@ -9,33 +9,31 @@
 </head>
 <body>
 <div class="container">
-  <h1>Product Info </h1>
-  <h3 th:text="${'ID ' + product.id }"></h3>
-  <h3 th:text="${'Title ' + product.title }"></h3>
-  <h3 th:text="${'Price ' + product.price }"></h3>
-  <h2>This product was bought by:</h2>
+  <h1>Customer Info </h1>
+  <h3 th:text="${'ID ' + customer.id }"></h3>
+  <h3 th:text="${'Name ' + customer.name }"></h3>
+
+  <h2>Buyings</h2>
   <table class="table">
     <thead>
     <tr>
-      <td>Customer ID</td>
-      <td>Customer Name</td>
-      <td>Buy Price</td>
+      <td>Product ID</td>
+      <td>Title</td>
+      <td>Price</td>
       <td></td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="c : ${customersInfo}">
-      <td th:text="${c.customer.id}"></td>
-      <td th:text="${c.customer.name}"></td>
+    <tr th:each="c : ${buyDetails}">
+      <td th:text="${c.product.id}"></td>
+      <td th:text="${c.product.title}"></td>
       <td th:text="${c.buyPrice}"></td>
-      <p></p>
+
     </tr>
     </tbody>
   </table>
-  <p></p>
-  <a class="btn btn-primary" th:href="@{/}">To Products Page</a>
+  <a class="btn btn-primary" th:href="@{/customers}">To Customers Page</a>
 </div>
-
 </body>
 
 </html>
