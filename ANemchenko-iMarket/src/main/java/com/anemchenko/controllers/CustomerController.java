@@ -24,7 +24,7 @@ public class CustomerController {
     }
     @GetMapping("/customers/{id}")
     public String showProductInfo(Model model, @PathVariable Long id){
-        model.addAttribute("customerDao", customerService.getCustomerById(id));
+        model.addAttribute("customer", customerService.getCustomerById(id));
         model.addAttribute("buyDetails", customerService.findCustomerDetailsById(id));
         return "customer_details_form";
     }

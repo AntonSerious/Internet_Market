@@ -10,8 +10,8 @@
 <body>
 <div class="container">
   <h1>Customer Info </h1>
-  <h3 th:text="${'ID ' + customerDao.id }"></h3>
-  <h3 th:text="${'Name ' + customerDao.name }"></h3>
+  <h3 th:text="${'ID ' + customer.id }"></h3>
+  <h3 th:text="${'Name ' + customer.name }"></h3>
 
   <h2>Buyings</h2>
   <table class="table">
@@ -25,8 +25,8 @@
     </thead>
     <tbody>
     <tr th:each="c : ${buyDetails}">
-      <td th:text="${c.productDao.id}"></td>
-      <td th:text="${c.productDao.title}"></td>
+      <td th:text="${c.product.id}"></td>
+      <td th:text="${c.product.title}"></td>
       <td th:text="${c.buyPrice}"></td>
 
     </tr>

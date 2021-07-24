@@ -1,22 +1,14 @@
-package com.anemchenko.repositories;
+package com.anemchenko.model;
 
-import com.anemchenko.utils.DBFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.anemchenko.repositories.CustomerDao;
+import com.anemchenko.repositories.ProductDao;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Component
 @Entity
 @Table(name = "cust_buyings_info")
-public class custBuyingsInfoDao {
-
-    @Autowired
-    @Transient
-    DBFactory dbFactory;
-
-
-
+public class Customer_x_Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idRecord")
@@ -24,29 +16,35 @@ public class custBuyingsInfoDao {
 
     @ManyToOne
     @JoinColumn(name = "idCustomer")
-    private CustomerDao customerDao;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "idProduct")
-    private ProductDao productDao;
+    private Product product;
 
     @Column(name = "buyPrice")
     private long buyPrice;
-
 
     public long getId() {
         return id;
     }
 
-    public CustomerDao getCustomerDao() {
-        return customerDao;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public ProductDao getProductDao() {
-        return productDao;
+    public Customer getCustomer() {
+        return customer;
+    }
+    public Product getProduct() {
+        return product;
     }
 
     public long getBuyPrice() {
         return buyPrice;
+    }
+
+    public void setBuyPrice(long buyPrice) {
+        this.buyPrice = buyPrice;
     }
 }

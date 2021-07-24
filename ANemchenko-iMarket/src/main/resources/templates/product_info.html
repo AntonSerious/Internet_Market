@@ -25,8 +25,8 @@
     </thead>
     <tbody>
     <tr th:each="c : ${customersInfo}">
-      <td th:text="${c.customerDao.id}"></td>
-      <td th:text="${c.customerDao.name}"></td>
+      <td th:text="${c.customer.id}"></td>
+      <td th:text="${c.customer.name}"></td>
       <td th:text="${c.buyPrice}"></td>
       <p></p>
     </tr>

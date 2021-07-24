@@ -1,7 +1,9 @@
 package com.anemchenko.services;
 
 import com.anemchenko.model.Customer;
+import com.anemchenko.model.Customer_x_Product;
 import com.anemchenko.repositories.CustomerDao;
+import com.anemchenko.repositories.Customer_x_ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,14 @@ public class CustomerService {
         this.customerDao = customerDao;
     }
 
-    public CustomerDao getCustomerById(Long id){
+    public Customer getCustomerById(Long id){
         return customerDao.getCustomerById(id);
     }
     public List<Customer> getAllCustomers(){
         return customerDao.getAllCustomers();
     }
 
-    public List<com.anemchenko.repositories.custBuyingsInfoDao> findCustomerDetailsById(Long id) {
-        return customerDao.findCustomersDetailsById(id);
+    public List<Customer_x_Product> findCustomerDetailsById(Long id) {
+        return customerDao.findBuyingDetailsByCustomerId(id);
     }
 }

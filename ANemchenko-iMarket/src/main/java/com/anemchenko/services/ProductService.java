@@ -1,8 +1,8 @@
 package com.anemchenko.services;
 
+import com.anemchenko.model.Customer_x_Product;
 import com.anemchenko.model.Product;
 import com.anemchenko.repositories.ProductDao;
-import com.anemchenko.repositories.custBuyingsInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +27,14 @@ public class ProductService {
     public void saveNewProduct(Long id, String title, int price){
 
         Product product = new Product(id, title, price);
-        productDao.saveOrUpdate(product);
+        productDao.save(product);
     }
 
     public void deleteProductById(Long id) {
         productDao.deleteById(id);
     }
 
-    public List<custBuyingsInfoDao> findAllCustomersById(Long id) {
-        return productDao.findAllCustomersById(id);
+    public List<Customer_x_Product> findAllCustomersByProductId(Long id) {
+        return productDao.findAllCustomersByProductId(id);
     }
 }

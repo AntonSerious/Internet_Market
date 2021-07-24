@@ -14,9 +14,9 @@
         <property name="hbm2ddl.auto">none</property>
         <property name="current_session_context_class">thread</property>
 
-        <mapping class="com.anemchenko.repositories.ProductDao"/>
-        <mapping class="com.anemchenko.repositories.CustomerDao"/>
-        <mapping class="com.anemchenko.repositories.custBuyingsInfoDao"/>
+        <mapping class="com.anemchenko.model.Product"/>
+        <mapping class="com.anemchenko.model.Customer"/>
+        <mapping class="com.anemchenko.model.Customer_x_Product"/>
 
     </session-factory>
 </hibernate-configuration>

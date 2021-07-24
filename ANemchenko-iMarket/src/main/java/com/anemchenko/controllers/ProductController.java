@@ -1,7 +1,5 @@
 package com.anemchenko.controllers;
 
-import com.anemchenko.model.Product;
-import com.anemchenko.repositories.ProductDao;
 import com.anemchenko.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +36,7 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public String showProductInfo(Model model, @PathVariable Long id){
         model.addAttribute("product", productService.findById(id));
-        model.addAttribute("customersInfo", productService.findAllCustomersById(id));
+        model.addAttribute("customersInfo", productService.findAllCustomersByProductId(id));
         return "product_info";
     }
 
