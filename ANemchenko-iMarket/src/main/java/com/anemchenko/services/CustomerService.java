@@ -2,30 +2,28 @@ package com.anemchenko.services;
 
 import com.anemchenko.model.Customer;
 import com.anemchenko.model.Customer_x_Product;
-import com.anemchenko.repositories.CustomerDao;
-import com.anemchenko.repositories.Customer_x_ProductDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.anemchenko.repositories.CustomerRepository;
+import com.anemchenko.repositories.Customer_x_ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
-    private CustomerDao customerDao;
-
-    @Autowired
-    public CustomerService(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
+    private final CustomerRepository customerRepository;
+    private final Customer_x_ProductRepository customer_x_productRepository;
 
     public Customer getCustomerById(Long id){
-        return customerDao.getCustomerById(id);
+        return customerRepository.findById(id).get();
     }
     public List<Customer> getAllCustomers(){
-        return customerDao.getAllCustomers();
+        return customerRepository.findAll();
     }
 
     public List<Customer_x_Product> findCustomerDetailsById(Long id) {
-        return customerDao.findBuyingDetailsByCustomerId(id);
+        return customer_x_productRepository.findByCustomer_Id(id);
     }
 }
