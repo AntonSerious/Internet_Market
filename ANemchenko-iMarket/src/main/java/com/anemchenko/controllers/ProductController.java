@@ -1,10 +1,13 @@
 package com.anemchenko.controllers;
 
+import com.anemchenko.model.Product;
 import com.anemchenko.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -50,5 +53,24 @@ public class ProductController {
         productService.deleteProductById(id);
         return "redirect:/";
     }
+    @GetMapping("/products/find_by_min_price")
+    @ResponseBody
+    public List<Product> findByMinPrice(@RequestParam(name = "min") int min){
+        return productService.findAllProductsByPriceGreaterOrEqualThanMinPrice(min);
+    }
+
+    @GetMapping("/products/find_by_max_price")
+    @ResponseBody
+    public List<Product> findByMaxPrice(@RequestParam(name = "max") int max){
+        return productService.findAllProductsByPriceLessOrEqualThanMaxPrice(max);
+    }
+
+    @GetMapping("/products/find_by_price_between_min_and_max")
+    @ResponseBody
+    public List<Product> findByPriceBetweenMinAndMax(@RequestParam(name = "min") int min, @RequestParam(name = "max") int max ){
+        return productService.findAllProductsByPriceBetweenMinAndMaxPrice(min, max);
+    }
+
+
 
 }

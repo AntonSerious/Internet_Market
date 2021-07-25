@@ -30,7 +30,7 @@ public class CustomerDao {
     public List<Customer_x_Product> findBuyingDetailsByCustomerId(Long id) {
         try(Session session = dbFactory.getFactory().getCurrentSession()){
             session.beginTransaction();
-            List<Customer_x_Product> buyDetails = session.get(Customer.class, id).getBuyingsOfCostumer();
+            List<Customer_x_Product> buyDetails = session.get(Customer.class, id).getBuyingsOfCustomer();
             System.out.println(buyDetails);
             session.getTransaction().commit();
             return buyDetails;

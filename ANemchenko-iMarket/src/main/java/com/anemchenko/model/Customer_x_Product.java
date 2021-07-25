@@ -1,50 +1,28 @@
 package com.anemchenko.model;
 
-import com.anemchenko.repositories.CustomerDao;
-import com.anemchenko.repositories.ProductDao;
-import org.springframework.stereotype.Component;
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cust_buyings_info")
+@Data
+@NoArgsConstructor
 public class Customer_x_Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idRecord")
+    @Column(name = "Record_Id")
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "idCustomer")
+    @JoinColumn(name = "Customer_Id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "Product_Id")
     private Product product;
 
-    @Column(name = "buyPrice")
+    @Column(name = "Buy_Price")
     private long buyPrice;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-    public Product getProduct() {
-        return product;
-    }
-
-    public long getBuyPrice() {
-        return buyPrice;
-    }
-
-    public void setBuyPrice(long buyPrice) {
-        this.buyPrice = buyPrice;
-    }
 }

@@ -2,48 +2,25 @@ package com.anemchenko.model;
 
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@Data
+@NoArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "Customer_Id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "customer")
-    private List<Customer_x_Product> buyingsOfCostumer;
-
-    public Customer() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Customer_x_Product> getBuyingsOfCostumer() {
-        return buyingsOfCostumer;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBuyingsOfCostumer(List<Customer_x_Product> buyingsOfCostumer) {
-        this.buyingsOfCostumer = buyingsOfCostumer;
-    }
+    private List<Customer_x_Product> buyingsOfCustomer;
 }
