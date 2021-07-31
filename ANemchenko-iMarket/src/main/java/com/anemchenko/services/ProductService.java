@@ -7,6 +7,8 @@ import com.anemchenko.repositories.ProductDao;
 import com.anemchenko.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,4 +52,7 @@ public class ProductService {
         return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
+    public Page<Product> findPage(int pageIndex, int pageSize){
+        return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
+    }
 }
