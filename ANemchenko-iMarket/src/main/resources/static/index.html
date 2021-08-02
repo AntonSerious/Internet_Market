@@ -42,7 +42,19 @@
     <h3>Страница {{products.number + 1}} из {{products.totalPages}}</h3>
     <button class="btn btn-primary" ng-if="products.first == false" ng-click="loadPage(products.number)">Previous</button>
     <button class="btn btn-primary" ng-if="products.last == false" ng-click="loadPage(products.number + 2)">Next</button>
-
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" ng-if="products.first == false" ng-click="loadPage(products.number)">Previous</a>
+            </li>
+            <li ng-repeat="p in navList" class="page-item">
+                    <a class="page-link" ng-click="loadPage(p)">{{p}}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" ng-if="products.last == false" ng-click="loadPage(products.number + 2)">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 </body>

@@ -1,26 +1,9 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
-
-    $scope.loadProducts = function () {
-        $http({
-            url: 'http://localhost:8189/iMarket/products',
-            method: 'GET',
-            params: {
-            }
-        }).then(function (response){
-            console.log(response);
-            $scope.products = response.data;
-
-        });
-    };
-    $scope.counterValue = 1;
-    $scope.clickIncrementButton = function(){
-        $scope.counterValue +=1;
-    };
-
+    const contextPath = 'http://localhost:8189/iMarket/'
 
     $scope.loadPage = function(pageIndex){
         $http({
-            url: 'http://localhost:8189/iMarket/products_page',
+            url: contextPath + 'api/v1/products',
             method: 'GET',
                 params: {
                     'p' : pageIndex
@@ -28,29 +11,30 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             }).then(function (response){
                 console.log(response);
                 $scope.products = response.data
+                $scope.navList = $scope.generatePagesIndexes(1, $scope.products.totalPages)
             });
     };
     $scope.loadPage(1);
     $scope.showProductInfo = function(productIndex){
         $http({
-                url: 'http://localhost:8189/iMarket/products',
+                url: contextPath + 'api/v1/products',
                 method: 'GET',
                 params: {
                     'p' : productIndex
                 }
             }).then(function (response){
-                alert("deleted");
+                alert("something");
 
             });
     };
     $scope.deleteProductFromScope = function(productIndex){
-            $scope.products.splice(productIndex, 1);
-        };
+            $scope.products.content.splice(productIndex, 1);
+    };
 
     $scope.deleteProductById = function(productIndexDB, productIndexScope ){
             $http({
-                    url: 'http://localhost:8189/iMarket/products/delete',
-                    method: 'GET',
+                    url: contextPath + 'api/v1/products',
+                    method: 'DELETE',
                     params: {
                         'p' : productIndexDB
                     }
@@ -58,4 +42,11 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                     $scope.deleteProductFromScope(productIndexScope)
                 });
     };
+    $scope.generatePagesIndexes = function(startPage, endPage){
+        let arr = [];
+        for(let i = startPage; i< endPage + 1; i++){
+            arr.push(i);
+        }
+        return arr;
+    }
 });
