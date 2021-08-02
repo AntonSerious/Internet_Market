@@ -1,6 +1,5 @@
 package com.anemchenko.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,24 +10,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
-public class Product {
-
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Product_Id")
+    @Column(name = "Category_Id")
     private Long id;
 
     @Column(name = "Title")
     private String title;
 
-    @Column(name = "Price")
-    private int price;
-
-    @OneToMany(mappedBy = "product")
-    private List<Customer_x_Product> customersOfProduct;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     @CreationTimestamp
     @Column(name = "Created_at")
@@ -37,20 +32,5 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "Modified_at")
     private LocalDateTime modifiedAt;
-
-    public Product(String title, int price){
-        this.title = title;
-        this.price = price;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "Category_Id")
-    private Category category;
-
-    public Product(Long id, String title, int price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
-
 }
+

@@ -1,9 +1,9 @@
 package com.anemchenko.services;
 
+import com.anemchenko.model.Category;
 import com.anemchenko.model.Customer_x_Product;
 import com.anemchenko.model.Product;
 import com.anemchenko.repositories.Customer_x_ProductRepository;
-import com.anemchenko.repositories.ProductDao;
 import com.anemchenko.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +28,10 @@ public class ProductService {
     public Product findById(Long id){
         return productRepository.findById(id).get();
     }
-    public void saveNewProduct(Long id, String title, int price){
-
-        Product product = new Product(id, title, price);
-        productRepository.save(product);
+    public Product save(Product newProduct){
+        return productRepository.save(newProduct);
     }
 
-    public void deleteProductById(Long id) {
-        productRepository.deleteById(id);
-    }
 
     public List<Customer_x_Product> findAllCustomersByProductId(Long id){
        return customer_x_productRepository.findByProduct_Id(id);
@@ -55,4 +50,10 @@ public class ProductService {
     public Page<Product> findPage(int pageIndex, int pageSize){
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+
 }
