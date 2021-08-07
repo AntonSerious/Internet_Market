@@ -24,6 +24,6 @@ public class CustomerService {
     }
 
     public List<Customer_x_Product> findCustomerDetailsById(Long id) {
-        return customer_x_productRepository.findByCustomer_Id(id);
+        return customer_x_productRepository.findByCustomer_customerId(id);
     }
 }

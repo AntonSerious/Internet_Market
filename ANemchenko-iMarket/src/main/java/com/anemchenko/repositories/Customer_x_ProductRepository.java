@@ -11,8 +11,9 @@ import java.util.List;
 
 @Repository
 public interface Customer_x_ProductRepository extends JpaRepository<Customer_x_Product, Long> {
-    List<Customer_x_Product> findByProduct_Id(Long id);
+    List<Customer_x_Product> findByProduct_productId(Long id);
 
 
-    List<Customer_x_Product> findByCustomer_Id(Long id);
+
+    List<Customer_x_Product> findByCustomer_customerId(Long id);
 }

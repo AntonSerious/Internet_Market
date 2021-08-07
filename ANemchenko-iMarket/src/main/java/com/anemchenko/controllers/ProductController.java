@@ -4,14 +4,10 @@ import com.anemchenko.dto.ProductDto;
 import com.anemchenko.model.Product;
 import com.anemchenko.services.CategoryService;
 import com.anemchenko.services.ProductService;
+import com.anemchenko.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +18,10 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id){
-        return new ProductDto(productService.findById(id));
+        Product p = productService.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found: " + id));
+        return new ProductDto(p);
     }
+
 
     @GetMapping
     public Page<Product> findAll (@RequestParam(name = "p", defaultValue = "1") int pageIndex){

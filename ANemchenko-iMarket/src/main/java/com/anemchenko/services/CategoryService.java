@@ -6,6 +6,8 @@ import com.anemchenko.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -13,8 +15,8 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public Category findById(Long id){
-        return categoryRepository.findById(id).get();
+    public Optional<Category> findById(Long id){
+        return categoryRepository.findById(id);
     }
 
     public Category findByTitle(String categoryTitle){
