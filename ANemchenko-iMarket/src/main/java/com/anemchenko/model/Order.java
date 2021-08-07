@@ -1,35 +1,42 @@
 package com.anemchenko.model;
 
+import com.anemchenko.dto.OrderItemDto;
+import com.anemchenko.services.ProductService;
+import com.anemchenko.utils.Cart;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
-public class Product {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Product_Id")
-    private Long productId;
+    @Column(name = "Order_Id")
+    private Long orderId;
 
-    @Column(name = "Title")
-    private String title;
+    @Column(name = "Order_Price")
+    private BigDecimal orderPrice;
 
-    @Column(name = "Price")
-    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "Customer_Id")
+    private Customer customer;
 
-    @OneToMany(mappedBy = "product")
-    private List<Customer_x_Product> customersOfProduct;
+    @OneToMany(mappedBy = "order")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> items;
 
     @CreationTimestamp
     @Column(name = "Created_at")
@@ -38,12 +45,5 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "Modified_at")
     private LocalDateTime modifiedAt;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "Category_Id")
-    private Category category;
-
-
 
 }

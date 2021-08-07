@@ -1,8 +1,9 @@
 package com.anemchenko.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.anemchenko.utils.Cart;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,24 +13,32 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "orders_details")
 @Data
 @NoArgsConstructor
-public class Product {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Product_Id")
-    private Long productId;
+    @Column(name = "Order_Detail_Id")
+    private Long orderDetailId;
 
-    @Column(name = "Title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "Order_Id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
+
+    @Column(name = "Price_Per_Product")
+    private BigDecimal pricePerProduct;
 
     @Column(name = "Price")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "product")
-    private List<Customer_x_Product> customersOfProduct;
+    @Column(name = "Quantity")
+    private int quantity;
 
     @CreationTimestamp
     @Column(name = "Created_at")
@@ -38,11 +47,6 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "Modified_at")
     private LocalDateTime modifiedAt;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "Category_Id")
-    private Category category;
 
 
 

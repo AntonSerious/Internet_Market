@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findById(Long id){
-        return productRepository.findById(id).get();
+    public Optional<Product> findById(Long id){
+        return productRepository.findById(id);
     }
     public Product save(Product newProduct){
         return productRepository.save(newProduct);
@@ -34,7 +35,7 @@ public class ProductService {
 
 
     public List<Customer_x_Product> findAllCustomersByProductId(Long id){
-       return customer_x_productRepository.findByProduct_Id(id);
+       return customer_x_productRepository.findByProduct_productId(id);
     }
 
     public List<Product> findAllProductsByPriceGreaterOrEqualThanMinPrice(int minPrice){
