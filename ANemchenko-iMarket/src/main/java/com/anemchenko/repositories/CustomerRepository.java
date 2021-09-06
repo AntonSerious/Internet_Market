@@ -13,4 +13,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("select c from Customer c join fetch c.buyingsOfCustomer where c.id = :id")
     Optional<Customer> findBuyingsOfCustomer(@Param("id") Long id);
+
+    Optional<Customer> findCustomerByName(String customerName);
 }

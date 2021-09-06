@@ -3,9 +3,11 @@ package com.anemchenko.services;
 
 import com.anemchenko.dto.OrderItemDto;
 import com.anemchenko.exceptions.ResourceNotFoundException;
+import com.anemchenko.model.Customer;
 import com.anemchenko.model.Order;
 import com.anemchenko.model.OrderItem;
 import com.anemchenko.model.Product;
+import com.anemchenko.repositories.CustomerRepository;
 import com.anemchenko.repositories.OrderRepository;
 import com.anemchenko.utils.Cart;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +27,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
+
     private final Cart cart;
 
 
     @Transactional
-    public void createOrder(){
+    public void createOrder(String customerName){
         Order order = new Order();
         order.setOrderPrice(cart.getPrice());
         order.setItems(new ArrayList<>());
@@ -40,7 +46,16 @@ public class OrderService {
             orderItem.setPricePerProduct(product.getPrice());
             orderItem.setProduct(product);
             order.getItems().add(orderItem);
-            order.setCustomer(customerService.getCustomerById(1L)); //заглушечка на первое время
+
+        }
+        Optional<Customer> customer = customerService.getCustomerByName(customerName);
+        if(!customer.isPresent()){
+            Customer newCust = new Customer();
+            newCust.setName(customerName);
+            customerRepository.save(newCust);
+            order.setCustomer(newCust);
+        }else {
+            order.setCustomer(customer.get());
         }
         orderRepository.save(order);
         cart.clear();
@@ -49,4 +64,9 @@ public class OrderService {
     public List<Order> findAll(){
         return orderRepository.findAll();
     }
+
+    public List<Order> findByCustomerName(String customerName){
+        return orderRepository.findByCustomer_Name(customerName);
+    }
+
 }
