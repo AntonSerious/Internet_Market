@@ -1,4 +1,4 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
+angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/iMarket/'
 
     $scope.loadPage = function(pageIndex){
@@ -73,6 +73,9 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     };
     $scope.loadOrders = function(){
+           if(!$scope.isUserLoggedIn()){
+            return;
+           }
            $http({
                 url: contextPath + 'api/v1/orders',
                 method: 'GET'
@@ -94,8 +97,52 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     };
 
 
+
+
+    $scope.tryToAuth = function () {
+            $http.post(contextPath + 'api/v1/auth', $scope.user)
+                .then(function successCallback(response) {
+                    if (response.data.token) {
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                        $localStorage.summerUser = {username: $scope.user.username, token: response.data.token};
+
+                        $scope.user.username = null;
+                        $scope.user.password = null;
+
+                        $scope.loadOrders();
+                    }
+                }, function errorCallback(response) {
+                });
+    };
+
+    $scope.clearUser = function () {
+            delete $localStorage.summerUser;
+            $http.defaults.headers.common.Authorization = '';
+        };
+
+    $scope.tryToLogout = function () {
+            $scope.clearUser();
+            if ($scope.user.username) {
+                $scope.user.username = null;
+            }
+            if ($scope.user.password) {
+                $scope.user.password = null;
+            }
+        };
+
+    $scope.isUserLoggedIn = function () {
+            if ($localStorage.summerUser) {
+                return true;
+            } else {
+                return false;
+            }
+    };
+    if ($localStorage.summerUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.summerUser.token;
+            $scope.loadOrders();
+        }
+
     $scope.loadPage(1);
     $scope.loadCart();
     $scope.loadOrders();
-
 });

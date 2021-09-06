@@ -13,3 +13,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+jwt:
+  lifetime: 3600000
+  secret: 3f9hwf9402-439)()U)0jjn0hgi^%&T())hohdh09y90--9
