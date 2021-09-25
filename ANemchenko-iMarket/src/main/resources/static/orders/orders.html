@@ -1,0 +1,17 @@
+<div ng-show="isUserLoggedIn()">
+    <h3>Ваши заказы</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Цена</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat = "o in orders ">
+                <td>{{o.orderId}}</td>
+                <td>{{o.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

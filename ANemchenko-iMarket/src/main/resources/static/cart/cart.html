@@ -1,0 +1,35 @@
+<div>
+    <h3>Корзина</h3>
+        <table class="table" ng-if="cart.price != 0">
+            <thead>
+            <tr>
+                <td>Название</td>
+                <td>Количество</td>
+                <td>Цена</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat = "oi in cart.items ">
+                <td>{{oi.productTitle}}</td>
+                <td>{{oi.quantity}}
+                    <button type="button" class="btn btn-success" ng-click="addToCart(oi.productId)" >+</button>
+                    <button type="button" class="btn btn-danger" ng-click="removeOneFromCart(oi.productId)" ng-disabled="oi.quantity == 0">-</button>
+                </td>
+                <td>{{oi.quantity + ' x ' + oi.pricePerProduct + ' = ' + oi.price}}</td>
+                <td>
+                    <button class="btn btn-danger" ng-click="clearCart(oi.productId)" >Удалить</button>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Итого: {{cart.price}}</td>
+                <td><button class="btn btn-danger" ng-click="clearCart(0)">Очистить корзину</button></td>
+                <td><button ng-show="isUserLoggedIn()" class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button></td>
+                <td><button ng-show="!isUserLoggedIn()" class="btn btn-secondary" ng-click="createOrder()">Автоизуйтесь для оформления заказа</button></td>
+
+            </tr>
+            </tbody>
+        </table>
+</div>
