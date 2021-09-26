@@ -1,4 +1,4 @@
-angular.module('app').controller('storeController', function ($scope, $http) {
+angular.module('app').controller('storeController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/iMarket/';
     $scope.loadPage = function(pageIndex){
         $http({
@@ -22,7 +22,7 @@ angular.module('app').controller('storeController', function ($scope, $http) {
     }
     $scope.addToCart = function(productId){
             $http({
-                url: contextPath + 'api/v1/cart/add/' + productId ,
+                url: contextPath + 'api/v1/cart/' + $localStorage.guestCartId +'/add/' + productId ,
                 method: 'GET'
             }).then(function (response){
                 //$scope.loadCart();

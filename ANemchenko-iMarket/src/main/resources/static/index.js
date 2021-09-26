@@ -28,8 +28,15 @@
     }
 
     function run($rootScope, $http, $localStorage){
+        const contextPath = 'http://localhost:8189/iMarket/';
         if($localStorage.webMarketUser){
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
+        }
+        if(!$localStorage.guestCartId){
+            $http.get(contextPath + 'api/v1/cart/generate')
+                .then(function successCallback(response) {
+                    $localStorage.guestCartId = response.data.value;
+                });
         }
     }
 })();
@@ -45,8 +52,11 @@ angular.module('app').controller('indexController', function($rootScope, $scope,
                     $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
                     $scope.user.username = null;
                     $scope.user.password = null;
-//                    $scope.loadOrders();
-                }
+                    $http.get(contextPath + 'api/v1/cart/' + $localStorage.guestCartId + '/merge')
+                        .then(function successCallback(response) {
+                            //$localStorage.guestCartId = response.data.value;
+                        });
+               }
             }, function errorCallback(response) {
             });
     };

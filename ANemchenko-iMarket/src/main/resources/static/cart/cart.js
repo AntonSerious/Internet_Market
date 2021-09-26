@@ -1,9 +1,9 @@
-angular.module('app').controller('cartController', function ($scope, $http, $location) {
+angular.module('app').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8189/iMarket/';
 
     $scope.loadCart = function(){
         $http({
-            url: contextPath + 'api/v1/cart',
+            url: contextPath + 'api/v1/cart/' + $localStorage.guestCartId,
             method: 'GET'
         }).then(function (response){
             $scope.cart = response.data;
@@ -29,7 +29,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
 
     $scope.addToCart = function(productId){
         $http({
-            url: contextPath + 'api/v1/cart/add/' + productId ,
+            url: contextPath + 'api/v1/cart/' + $localStorage.guestCartId + '/add/' + productId ,
             method: 'GET'
         }).then(function (response){
             $scope.loadCart();
@@ -38,7 +38,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.removeOneFromCart = function(productId){
             $scope.cart
             $http({
-                url: contextPath + 'api/v1/cart/remove/' + productId ,
+                url: contextPath + 'api/v1/cart/' + $localStorage.guestCartId + '/remove/' + productId ,
                 method: 'GET'
             }).then(function (response){
                 $scope.loadCart();
@@ -46,7 +46,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
         };
     $scope.clearCart = function(productId){
             $http({
-                url: contextPath + 'api/v1/cart/clear/' + productId ,
+                url: contextPath + 'api/v1/cart/' + $localStorage.guestCartId + '/clear/' + productId ,
                 method: 'GET'
             }).then(function (response){
                 $scope.loadCart();

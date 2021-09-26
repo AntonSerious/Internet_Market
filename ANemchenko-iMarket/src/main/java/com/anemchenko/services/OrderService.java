@@ -29,12 +29,14 @@ public class OrderService {
     private final CustomerService customerService;
     private final CustomerRepository customerRepository;
 
-    private final Cart cart;
+    private final CartService cartService;
 
 
     @Transactional
-    public void createOrder(String customerName){
+    public void createOrder(Principal principal){
+        String customerName = principal.getName();
         Order order = new Order();
+        Cart cart = cartService.getCartForCurrentUser(principal, null);
         order.setOrderPrice(cart.getPrice());
         order.setItems(new ArrayList<>());
         for(OrderItemDto o : cart.getItems()){
@@ -58,7 +60,7 @@ public class OrderService {
             order.setCustomer(customer.get());
         }
         orderRepository.save(order);
-        cart.clear();
+        cartService.clearCurrentCart(principal, null);
     }
 
     public List<Order> findAll(){
