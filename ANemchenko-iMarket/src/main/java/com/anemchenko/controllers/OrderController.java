@@ -30,7 +30,7 @@ public class OrderController {
     public void createOrder(Principal principal){
         //User user = userService.findByUsername(principal.getName()).get();
         //System.out.println(user.getEmail());
-        orderService.createOrder(principal.getName());
+        orderService.createOrder(principal);
     }
 
     @GetMapping()
