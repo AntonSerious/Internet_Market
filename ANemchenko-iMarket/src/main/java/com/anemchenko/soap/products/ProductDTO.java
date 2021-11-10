@@ -123,7 +123,7 @@ public class ProductDTO {
 
     /**
      * Gets the value of the categoryId property.
-     * 
+     *
      */
     public Long getCategoryId() {
         return categoryId;
@@ -131,7 +131,7 @@ public class ProductDTO {
 
     /**
      * Sets the value of the categoryId property.
-     * 
+     *
      */
     public void setCategoryId(Long value) {
         this.categoryId = value;

@@ -1,6 +1,5 @@
 package com.anemchenko.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,9 +27,6 @@ public class Product {
     @Column(name = "Price")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "product")
-    private List<Customer_x_Product> customersOfProduct;
-
     @CreationTimestamp
     @Column(name = "Created_at")
     private LocalDateTime createdAt;
@@ -38,12 +34,5 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "Modified_at")
     private LocalDateTime modifiedAt;
-
-
-    @ManyToOne
-    @JoinColumn(name = "Category_Id")
-    private Category category;
-
-
 
 }

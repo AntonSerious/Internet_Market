@@ -20,7 +20,6 @@ public class ProductsEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
-    @Transactional
     public GetAllProductsResponse getGroupByTitle(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
         //response.setProducts(productService.findAllSoap());
