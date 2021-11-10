@@ -1,0 +1,17 @@
+server:
+  port: 8191
+  servlet:
+    context-path: /FrontService
+spring:
+  application:
+    name: FrontService
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetchRegistry: true
+  instance:
+    hostname: localhost
+jwt:
+  lifetime: 3600000
+  secret: 3f9hwf9402-439)()U)0jjn0hgi^%&T())hohdh09y90--9
