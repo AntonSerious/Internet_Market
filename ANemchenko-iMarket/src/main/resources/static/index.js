@@ -22,6 +22,18 @@
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
+            .when('/profile', {
+                templateUrl: 'profile/profile.html',
+                controller: 'profileController'
+            })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
+            })
+            .when('/store/:productId', {
+                templateUrl: 'store/product_info.html',
+                controller: 'productInfoController'
+            })
             .otherwise({
                 redirect: '/'
             });

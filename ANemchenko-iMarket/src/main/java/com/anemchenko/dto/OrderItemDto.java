@@ -1,5 +1,6 @@
 package com.anemchenko.dto;
 
+import com.anemchenko.model.OrderItem;
 import com.anemchenko.model.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,13 @@ public class OrderItemDto {
         this.pricePerProduct = product.getPrice();
         this.price = product.getPrice();
         this.productTitle = product.getTitle();
+    }
+
+    public OrderItemDto(OrderItem orderItem) {
+        this.productId = orderItem.getProduct().getProductId();
+        this.productTitle = orderItem.getProduct().getTitle();
+        this.quantity = orderItem.getQuantity();
+        this.pricePerProduct = orderItem.getPricePerProduct();
     }
 
     public void incrementQuantity(int amount){

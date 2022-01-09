@@ -19,6 +19,20 @@ import java.util.List;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
+@NamedEntityGraph(
+        name = "orders.for-front",
+        attributeNodes = {
+                @NamedAttributeNode(value = "items", subgraph = "items-products")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "items-products",
+                        attributeNodes = {
+                                @NamedAttributeNode("product")
+                        }
+                )
+        }
+)
 public class Order {
 
     @Id
@@ -31,7 +45,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "Customer_Id")
-    private Customer customer;
+    private User user;
 
     @OneToMany(mappedBy = "order")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

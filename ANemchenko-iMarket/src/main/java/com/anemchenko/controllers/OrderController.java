@@ -1,22 +1,13 @@
 package com.anemchenko.controllers;
 
 import com.anemchenko.dto.OrderDto;
-import com.anemchenko.dto.OrderItemDto;
-import com.anemchenko.dto.ProductDto;
-import com.anemchenko.exceptions.ResourceNotFoundException;
-import com.anemchenko.model.*;
-import com.anemchenko.services.CategoryService;
 import com.anemchenko.services.OrderService;
-import com.anemchenko.services.ProductService;
 import com.anemchenko.services.UserService;
-import com.anemchenko.utils.Cart;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,6 +26,11 @@ public class OrderController {
 
     @GetMapping()
     public List<OrderDto> getAllOrders(Principal principal){
-        return orderService.findByCustomerName(principal.getName()).stream().map(OrderDto::new).collect(Collectors.toList());
+        return orderService.findByUserName(principal.getName()).stream().map(OrderDto::new).collect(Collectors.toList());
     }
+    @GetMapping("/isProductOrdered")
+    public boolean isProductOrdered (Principal principal, @RequestParam (name = "p") Long productId){
+        return orderService.isProductOrdered(principal.getName(), productId);
+    }
+
 }
