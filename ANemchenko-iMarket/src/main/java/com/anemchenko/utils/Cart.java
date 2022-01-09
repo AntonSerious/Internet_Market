@@ -72,7 +72,20 @@ public class Cart {
             }
         }
     }
-
+    public void decrement(Long productId) {
+        Iterator<OrderItemDto> iter = items.iterator();
+        while (iter.hasNext()) {
+            OrderItemDto i = iter.next();
+            if (i.getProductId().equals(productId)) {
+                i.incrementQuantity(-1);
+                if (i.getQuantity() <= 0) {
+                    iter.remove();
+                }
+                recalculate();
+                return;
+            }
+        }
+    }
     public void merge(Cart anotherCart){
         for(OrderItemDto anotherItem : anotherCart.items){
             boolean merged = false;

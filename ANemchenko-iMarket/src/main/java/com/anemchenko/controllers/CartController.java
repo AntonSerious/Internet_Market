@@ -23,44 +23,46 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cart")
 public class CartController {
-    //private final Cart cart;
-    //private final ProductService productService;
     private final CartService cartService;
 
+    @GetMapping("/{uuid}")
+    public Cart getCartForCurrentUser(Principal principal, @PathVariable String uuid){
+        return cartService.getCurrentCart(getCurrentCartUuid(principal, uuid));
+    }
     @GetMapping("/generate")
     public StringResponse generateCartUuid(){
         return new StringResponse(UUID.randomUUID().toString());
     }
 
+    @GetMapping("/{uuid}/add/{productId}")
+    public void add(Principal principal, @PathVariable String uuid, @PathVariable Long productId){
+        cartService.addToCart(getCurrentCartUuid(principal, uuid), productId);
+    }
+    @GetMapping("/{uuid}/decrement/{productId}")
+    public void decrement(Principal principal, @PathVariable String uuid, @PathVariable Long productId) {
+        cartService.decrementItem(getCurrentCartUuid(principal, uuid), productId);
+    }
+    @GetMapping("/{uuid}/remove/{id}")
+    public void remove(Principal principal, @PathVariable String uuid, @PathVariable Long id){
+        cartService.removeItemFromCart(getCurrentCartUuid(principal, uuid), id);
+    }
     @GetMapping("/{uuid}/merge")
     public void mergeCarts(Principal principal, @PathVariable String uuid){
         //TODO исправить- чтобы нельзя было вызвать это без токена
-        cartService.merge(principal, uuid);
+        cartService.merge(
+                getCurrentCartUuid(principal, null),
+                getCurrentCartUuid(null, uuid));
     }
 
-    @GetMapping("/{uuid}")
-    public Cart getCartForCurrentUser(Principal principal, @PathVariable String uuid){
-        return cartService.getCartForCurrentUser(principal, uuid);
+    @GetMapping("/{uuid}/clear")
+    public void clear(Principal principal, @PathVariable String uuid) {
+        cartService.clearCart(getCurrentCartUuid(principal, uuid));
     }
 
-    @GetMapping("/{uuid}/add/{productId}")
-    public void add(Principal principal, @PathVariable String uuid, @PathVariable Long productId){
-        cartService.addToCart(principal, uuid, productId);
-
-
+    private String getCurrentCartUuid(Principal principal, String uuid) {
+        if (principal != null) {
+            return cartService.getCartUuidFromSuffix(principal.getName());
+        }
+        return cartService.getCartUuidFromSuffix(uuid);
     }
-
-    @GetMapping("/{uuid}/clear/{id}")
-    public void delete(Principal principal, @PathVariable String uuid, @PathVariable Long id){
-        cartService.clear(principal, uuid, id);
-
-    }
-
-    @GetMapping("/{uuid}/remove/{id}")
-    public void remove(Principal principal, @PathVariable String uuid, @PathVariable Long id){
-        cartService.remove(principal, uuid, id);
-
-    }
-
-
 }

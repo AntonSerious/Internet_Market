@@ -28,8 +28,13 @@ public class Product {
     @Column(name = "Price")
     private BigDecimal price;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Customer_x_Product> customersOfProduct;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<ProductComment> productComments;
 
     @CreationTimestamp
     @Column(name = "Created_at")
@@ -39,7 +44,10 @@ public class Product {
     @Column(name = "Modified_at")
     private LocalDateTime modifiedAt;
 
+    @Column(name = "Description")
+    private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "Category_Id")
     private Category category;

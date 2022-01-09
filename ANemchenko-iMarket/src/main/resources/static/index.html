@@ -22,7 +22,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#!/" style="font-weight: bold;">Spring Web Store</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/store">Каталог товаров</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!/cart">Корзина</a>
+                        </li>
+                        <li class="nav-item" ng-show="isUserLoggedIn()">
+                            <a class="nav-link" href="#!/profile">Профиль</a>
+                        </li>
 
                         <li class="nav-item" ng-show="!isUserLoggedIn()">
                             <form class="align-middle" ng-submit="tryToAuth()">
@@ -49,8 +57,14 @@
 
 
         <ng-view></ng-view>
-
         <script src="index.js"></script>
+        <script src="store/store.js"></script>
+        <script src="store/product_info.js"></script>
+        <script src="cart/cart.js"></script>
+        <script src="profile/profile.js"></script>
+        <script src="orders/orders.js"></script>
+        <script src="welcome/welcome.js"></script>
+        <script src="admin/admin.js"></script>
     </div>
 </body>
 </html>

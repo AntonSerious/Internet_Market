@@ -1,0 +1,37 @@
+<div>
+    <h1>{{productInfo.title}}</h1>
+    <p></p>
+    <div class="row g-2">
+        {{productInfo.description}}
+    </div>
+    <p></p>
+    <h3>Отзывы о товаре</h3>
+    <div ng-if="isProductBoughtResult == true && isCommentSentResult != true" >
+        <h4 >Ранее вы покупали данный товар. Поделитесь, пожалуйста, отзывом.</h4>
+        <form class="align-middle" ng-submit="tryToSendComment(productInfo.id)">
+            <div class="input-group input-group-sm" style="padding: 4px;">
+                <input id="navLoginField" class="form-control" ng-model="comment" type="text"
+                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;width:50vw;height:20vw">
+                <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                        style="margin-left: 10px;" type="submit" >Отправить отзыв
+                </button>
+            </div>
+        </form>
+    </div>
+    <div ng-if="isProductBoughtResult == false || (isProductBoughtResult == true && isCommentSentResult == true)">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Имя пользователя</td>
+                    <td>Отзыв</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat = "p in productComments ">
+                    <td>{{p.userName}}</td>
+                    <td>{{p.comment}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

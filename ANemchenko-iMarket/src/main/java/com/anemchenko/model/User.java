@@ -1,5 +1,6 @@
 package com.anemchenko.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,6 +35,10 @@ public class User {
             joinColumns = @JoinColumn(name = "User_Id"),
             inverseJoinColumns = @JoinColumn(name = "Role_Id"))
     private Collection<Role> roles;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<ProductComment> userComments;
 
     @CreationTimestamp
     @Column(name = "Created_at")

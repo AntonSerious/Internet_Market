@@ -1,11 +1,14 @@
 angular.module('app').controller('storeController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8189/iMarket/';
-    $scope.loadPage = function(pageIndex){
+    $scope.loadProducts = function(pageIndex){
         $http({
             url: contextPath + 'api/v1/products',
             method: 'GET',
                 params: {
-                    'p' : pageIndex
+                    p : pageIndex,
+                    title: $scope.filter ? $scope.filter.title : null,
+                    min_price: $scope.filter ? $scope.filter.min_price : null,
+                    max_price: $scope.filter ? $scope.filter.max_price : null
                 }
         }).then(function (response){
             console.log(response);
@@ -28,5 +31,5 @@ angular.module('app').controller('storeController', function ($scope, $http, $lo
                 //$scope.loadCart();
             });
         };
-    $scope.loadPage(1);
+    $scope.loadProducts(1);
 });
